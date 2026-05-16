@@ -74,8 +74,8 @@ def deleteFiles(file_name):
 		files=glob.glob(files+"*")
 		if files:
 			for file in files:
-				xbmcvfs.delete(file)
 				xbmc.log(u'Clean Remove %s' % file, level=xbmc.LOGINFO)
+				xbmcvfs.delete(file)
 
 		# Remove empty folder.
 		if addon.getSetting('remove_empty_folder')=="true":
@@ -126,8 +126,10 @@ def cleanRemove():
 	else:
 		if favourite:
 			id=int(favourite["id"])
-		else:
+		elif xbmc.getInfoLabel('ListItem.DBID'):
 			id=int(xbmc.getInfoLabel('ListItem.DBID'))
+		else:
+			id=0
 
 		if id < 0: id=int(xbmc.getInfoLabel('ListItem.Top250'));
 		if id > 0:
